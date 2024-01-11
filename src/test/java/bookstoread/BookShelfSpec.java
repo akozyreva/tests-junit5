@@ -32,7 +32,7 @@ class BookShelfSpec {
     // this will be visible in Test Results
     @DisplayName("is empty when no book is added to it")
     void shelfEmptyWhenNoBookAdded() {
-        BookShelf shelf = new BookShelf();
+        BookShelfString shelf = new BookShelfString();
         List<String> books = shelf.books();
         assertTrue(books.isEmpty(), () -> "BookShelf should be empty.");
     }
