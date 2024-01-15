@@ -112,6 +112,17 @@ public class BookShellCommonClassBookSpec {
                 .containsValues(singletonList(mythicalManMonth));
     }
 
+    @Test
+    @DisplayName("books inside bookshelf are grouped according to user provided criteria (group by author name)")
+    void groupBooksByUserProvidedCriteria(){
+        shelf.add(effectiveJava, codeComplete, mythicalManMonth, cleanCode);
+        Map<String, List<Book>> booksByAuthor = shelf.groupBy(Book::getAuthor);
+
+        assertThat(booksByAuthor).containsKey("Joshua Bloch").containsValues(singletonList(effectiveJava));
+
+        assertThat(booksByAuthor).containsKey("Steve McConnel").containsValues(singletonList(codeComplete));
+    }
+
 
 
 
