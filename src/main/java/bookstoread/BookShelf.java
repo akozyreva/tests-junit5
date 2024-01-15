@@ -21,4 +21,8 @@ public class BookShelf {
         // return sorted new array List without changing existing one
         return books.stream().sorted().collect(Collectors.toList());
     }
+
+    public List<Book> arrange(Comparator<Book> criteria) {
+        return books.stream().sorted(criteria).collect(Collectors.toList());
+    }
 }

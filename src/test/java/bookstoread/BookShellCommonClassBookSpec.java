@@ -1,13 +1,16 @@
 package bookstoread;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 // tests from chapter3
@@ -56,6 +59,7 @@ public class BookShellCommonClassBookSpec {
     }
 
     @Test
+    @DisplayName("bookshelf is arranged lexicographically by book title")
     void bookShelfArrangedByBookTitle(){
         shelf.add(effectiveJava, codeComplete, mythicalManMonth);
         List<Book> books = shelf.arrange();
@@ -72,6 +76,16 @@ public class BookShellCommonClassBookSpec {
         assertEquals(Arrays.asList(effectiveJava, codeComplete, mythicalManMonth), books,
                 () -> "Books in bookshelf are in insertion order");
     }
+
+    @Test
+    void bookshelfArrangedByUserProvidedCriteria() {
+        shelf.add(effectiveJava, codeComplete, mythicalManMonth);
+        List<Book> books = shelf.arrange(Comparator.<Book>naturalOrder().reversed());
+        Comparator<Book> reversed = Comparator.<Book>naturalOrder().reversed(); //???
+        assertThat(books).isSortedAccordingTo(reversed);
+    }
+
+
 
 
 
