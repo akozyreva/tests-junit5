@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +23,7 @@ public class BookShellCommonClassBookSpec {
     private Book effectiveJava;
     private Book codeComplete;
     private Book mythicalManMonth;
+    private Book cleanCode;
 
     @BeforeEach
     void init() {
@@ -30,6 +34,7 @@ public class BookShellCommonClassBookSpec {
                 LocalDate.of(2004, Month.JUNE, 9));
         mythicalManMonth = new Book("The Mythical Man-Month", "Frederick Phillips Brooks",
                 LocalDate.of(1975, Month.JANUARY, 1));
+        cleanCode = new Book("Clean Code", "Robert C. Martin", LocalDate.of(2008, Month.AUGUST, 1));
     }
 
     @Test
@@ -83,6 +88,28 @@ public class BookShellCommonClassBookSpec {
         List<Book> books = shelf.arrange(Comparator.<Book>naturalOrder().reversed());
         Comparator<Book> reversed = Comparator.<Book>naturalOrder().reversed(); //???
         assertThat(books).isSortedAccordingTo(reversed);
+    }
+
+    @Test
+    @DisplayName("books inside bookshelf are grouped by publication year")
+    void groupBooksInsideBookShelfByPublicationYear() {
+        shelf.add(effectiveJava, codeComplete, mythicalManMonth, cleanCode);
+        Map <Year, List<Book>> booksByPublicationYear = shelf.groupByPublicationYear();
+        for (Map.Entry<Year, List<Book>> entry : booksByPublicationYear.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        assertThat(booksByPublicationYear)
+                .containsKey(Year.of(2008))
+                .containsValues(Arrays.asList(effectiveJava, cleanCode));
+        /* singleton - useful, when you want to return unchangeable list with one elem
+        * */
+        assertThat(booksByPublicationYear)
+                .containsKey(Year.of(2004))
+                .containsValues(singletonList(codeComplete));
+
+        assertThat(booksByPublicationYear)
+                .containsKey(Year.of(1975))
+                .containsValues(singletonList(mythicalManMonth));
     }
 
 
