@@ -2,6 +2,7 @@ package bookstoread;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -37,19 +38,26 @@ public class BookShellCommonClassBookSpec {
         cleanCode = new Book("Clean Code", "Robert C. Martin", LocalDate.of(2008, Month.AUGUST, 1));
     }
 
-    @Test
-    void bookshelfContainsTwoBooksWhenTwoBooksAdded() {
-        shelf.add(effectiveJava, codeComplete);
-        List<Book> books = shelf.books();
-        assertEquals(2, books.size(), () -> "BookShelf should have two books.");
+    @Nested
+    @DisplayName("is empty")
+    class IsEmpty
+    {
+        @Test
+        void bookshelfContainsTwoBooksWhenTwoBooksAdded() {
+            shelf.add(effectiveJava, codeComplete);
+            List<Book> books = shelf.books();
+            assertEquals(2, books.size(), () -> "BookShelf should have two books.");
+        }
+
+        @Test
+        public void emptyBookShelfWhenAddIsCalledWithoutBooks() {
+            shelf.add();
+            List<Book> books = shelf.books();
+            assertTrue(books.isEmpty(), () -> "BookShelf should be empty.");
+        }
     }
 
-    @Test
-    public void emptyBookShelfWhenAddIsCalledWithoutBooks() {
-        shelf.add();
-        List<Book> books = shelf.books();
-        assertTrue(books.isEmpty(), () -> "BookShelf should be empty.");
-    }
+
 
     @Test
     void booksReturnedFromBookShelfIsImmutableForClient() {
