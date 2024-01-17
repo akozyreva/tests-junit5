@@ -3,11 +3,18 @@ package bookstoread;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Map;
 
+// chapter 4. We use BooksParameterResolver.class to set the same set of test data
+// for multiple test classes
+@DisplayName("progress")
+@ExtendWith(BooksParameterResolver.class)
 public class BookShelfProgressSpec {
     private BookShelf shelf;
     private Book effectiveJava;
@@ -17,18 +24,14 @@ public class BookShelfProgressSpec {
     private Book refactoring;
 
     @BeforeEach
-    void init() {
+    void init(Map<String, Book> books) {
         shelf = new BookShelf();
-        effectiveJava = new Book("Effective Java", "Joshua Bloch",
-                LocalDate.of(2008, Month.MAY, 8));
-        codeComplete = new Book("Code Complete", "Steve McConnel",
-                LocalDate.of(2004, Month.JUNE, 9));
-        mythicalManMonth = new Book("The Mythical Man-Month", "Frederick Phillips Brooks",
-                LocalDate.of(1975, Month.JANUARY, 1));
-        cleanCode = new Book("Clean Code", "Robert C. Martin", LocalDate.of(2008, Month.AUGUST, 1));
-        refactoring = new Book("Refactoring: Improving the Design of Existing Code", "Martin Fowler", LocalDate.of(2002, Month.MARCH, 9));
+        effectiveJava = books.get("Effective Java");
+        codeComplete = books.get("Code Complete");
+        mythicalManMonth = books.get("The Mythical Man-Month");
+        cleanCode = books.get("Clean Code");
+        refactoring = books.get("Refactoring: Improving the Design of Existing Code");
         shelf.add(effectiveJava, codeComplete, mythicalManMonth, cleanCode, refactoring);
-
     }
 
     @Test
