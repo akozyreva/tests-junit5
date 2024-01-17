@@ -39,4 +39,8 @@ public class BookShelf {
                 .stream()
                 .collect(groupingBy(fx));
     }
+
+    public Progress progress() {
+        return new Progress(0, 100, 0);
+    }
 }
