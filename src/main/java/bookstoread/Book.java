@@ -8,6 +8,8 @@ public class Book implements Comparable<Book> {
     private final String author;
 
     private final LocalDate publishedOn;
+    private LocalDate startingReadingOn;
+    private LocalDate finishedReadingOn;
 
     public Book(String title, String author, LocalDate publishedOn) {
         this.title = title;
@@ -44,5 +46,18 @@ public class Book implements Comparable<Book> {
         // it shows, how exactly comparison should be done
         System.out.println(this.title.compareTo(that.title));
         return this.title.compareTo(that.title);
+    }
+
+    public void startingReadingOn(LocalDate startedOn) {
+        this.startingReadingOn = startedOn;
+    }
+
+    public void finishedReadingOn(LocalDate finishedOn) {
+        this.finishedReadingOn = finishedOn;
+    }
+
+    public boolean isRead(){
+        // book which is being read or is read
+        return startingReadingOn != null && finishedReadingOn != null;
     }
 }
