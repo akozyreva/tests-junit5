@@ -2,6 +2,7 @@ package bookstoread;
 import java.time.Year;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -50,5 +51,13 @@ public class BookShelf {
 
     public List<Book> findBooksByTitle(String text) {
         return books.stream().filter(book -> book.getTitle().toLowerCase().contains(text)).collect(Collectors.toList());
+    }
+
+
+    public List<Book> findBooksByTitle(String title, Predicate<Book> filter) {
+        return books.stream()
+                .filter(b -> b.getTitle().toLowerCase().contains(title))
+                .filter(filter)
+                .collect(Collectors.toList());
     }
 }
