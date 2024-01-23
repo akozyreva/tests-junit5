@@ -47,4 +47,8 @@ public class BookShelf {
         int percentageToRead = booksToRead *  100 / books.size();
         return new Progress(percentageCompleted, percentageToRead, 0);
     }
+
+    public List<Book> findBooksByTitle(String text) {
+        return books.stream().filter(book -> book.getTitle().toLowerCase().contains(text)).collect(Collectors.toList());
+    }
 }

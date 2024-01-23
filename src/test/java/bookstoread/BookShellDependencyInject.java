@@ -101,6 +101,24 @@ public class BookShellDependencyInject {
         assertThat(booksByAuthor).containsKey("Steve McConnel").containsValues(singletonList(codeComplete));
     }
 
+    // example of nested.
+    // it's not only group tests, but has it's own BeforeEach
+    @Nested
+    @DisplayName("search")
+    public class BookShelfSearchSpec {
+
+        @BeforeEach
+        void setup(){
+            shelf.add(codeComplete, effectiveJava, mythicalManMonth, cleanCode);
+        }
+
+        @Test
+        @DisplayName("should find books with title containing text")
+        void shouldFindBooksWithTitleContainingText(){
+            List <Book> books = shelf.findBooksByTitle("code");
+            assertThat(books.size()).isEqualTo(2);
+        }
+    }
 
 
 
