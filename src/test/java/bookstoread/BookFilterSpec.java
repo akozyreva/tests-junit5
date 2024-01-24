@@ -43,5 +43,13 @@ public class BookFilterSpec {
             assertFalse(filter.apply(cleanCode));
             assertTrue(filter.apply(codeComplete));
         }
+
+        @Test
+        @DisplayName("Composite criteria is based on multiple filters")
+        void shouldFilterOnMultiplesCriteria(){
+            CompositeFilter compositeFilter = new CompositeFilter();
+            compositeFilter.addFilter(b -> false);
+            assertFalse(compositeFilter.apply(cleanCode));
+        }
     }
 }
