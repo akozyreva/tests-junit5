@@ -17,4 +17,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    filter {
+        //include specific method in any of the tests
+        // includeTestsMatching "*FilterSpec"
+
+        //include all tests from package
+        //includeTestsMatching "org.gradle.internal.*"
+
+        //include all integration tests
+        //includeTestsMatching "*IntegTest"
+    }
 }
